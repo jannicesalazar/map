@@ -9,7 +9,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //Event handler for when the map is clicked 
 function onMapClick(e) {
     // Fetch weather data using OpenWeatherMap API
-    const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
+    const apiKey = '6dea368c99a053969745d5e110936277';
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${e.latlng.lat}&lon=${e.latlng.lng}&appid=${apiKey}&units=metric`;
 
     fetch(apiUrl)
