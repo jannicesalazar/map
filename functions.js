@@ -1,3 +1,19 @@
+// checks if the user has visited the website before
+const hasVisited = localStorage.getItem('hasVisited');
+
+// if not visited, show the introduction popup and set the flag in localStorage
+if (hasVisited) {
+    Swal.fire({
+        title: 'Welcome!',
+        html: 'Hi, my name is Jannice and I made this website. You can look up any country or press anywhere to check out some data about that region.',
+        iconHtml: '<img src="sun.png" style="width: 50px; height: 50px;">',
+        confirmButtonText: 'Got it!'
+    });
+
+    // Set the flag to indicate that the user has visited
+    localStorage.setItem('hasVisited', 'true');
+}
+
 // initialize the map
 var map = L.map('map').setView([0, 0], 2);
 
@@ -25,26 +41,35 @@ function onMapClick(e) {
         const weatherDescription = data.weather[0].description;
         const temperature = data.main.temp;
         const temperatureF = (temperature *9/5) + 32;
-        
+       
+        // Weather icon code from OpenWeatherMap response
+        const iconCode = data.weather[0].icon;
+
+        // Constructing the weather icon URL
+        const weatherIconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
         // creates a popup with weather information
         const popupContent = `
-        <b>Latitude:</b> ${e.latlng.lat}<br>
-        <b>Longitude:</b> ${e.latlng.lng}<br>
-        <b>Weather:</b> ${weatherDescription}<br>
-        <b>Temperature:</b> ${temperature}°C / ${temperatureF}°F`;
-        
+            <div class="popup-container">
+                ${weatherDescription.toUpperCase()}<br>
+                <img src="${weatherIconUrl}" alt="Weather Icon" class="weather-icon"><br>
+                ${temperature.toFixed(2)}°C / ${temperatureF.toFixed(2)}°F <br>
+                <b>Latitude:</b> ${e.latlng.lat.toFixed(2)}<br>
+                <b>Longitude:</b> ${e.latlng.lng.toFixed(2)}<br></div>`;
+
         // add a marker with the popup to the clicked location
         currentMarker = L.marker(e.latlng).addTo(map)
-        .bindPopup(popupContent)
-        .openPopup();})
-        
-        currentMarker.on ('popupclose',function(){
+            .bindPopup(popupContent)
+            .openPopup();
+
+        currentMarker.on('popupclose', function () {
             map.removeLayer(currentMarker);
-            currentMarker = null;
-        })
+            currentMarker = null; })})
+        // ... Your existing code ...
+
         .catch(error => {
             // error message in the popup
-            const errorPopupContent = '<b>Error:</b> Unable to fetch weather data';
+            const errorPopupContent = '<b>Error:</b> Unable to fetch data';
             currentMarker = L.marker(e.latlng).addTo(map)
             .bindPopup(errorPopupContent)
             .openPopup();
@@ -77,24 +102,18 @@ document.getElementById('input').addEventListener('keydown', function (e) {
                     // fits the country on the screen
                     map.fitBounds([
                         [countryCoords[0] - 1, countryCoords[1] - 1],
-                        [countryCoords[0] + 1, countryCoords[1] + 1]
-                    ]);
-                    
-                    
-                } else {
-                    // error message in the popup
-                    const errorPopupContent = '<b>Error:</b> Country not found';
-                    currentMarker = L.marker(map.getCenter()).addTo(map)
-                    .bindPopup(errorPopupContent)
-                    .openPopup();
-                    
-                    // remove the marker when the popup is closed
-                    currentMarker.on('popupclose', function () {
-                        map.removeLayer(currentMarker);
-                        currentMarker = null;
-                    });
-                }
-            })
+                        [countryCoords[0] + 1, countryCoords[1] + 1] ]);}         
+        else {
+            // error message in the popup
+            const errorPopupContent = '<b>Error:</b> Country not found';
+            currentMarker = L.marker(map.getCenter()).addTo(map)
+            .bindPopup(errorPopupContent)
+            .openPopup();
+            
+            // remove the marker when the popup is closed
+            currentMarker.on('popupclose', function () {
+                map.removeLayer(currentMarker);
+                currentMarker = null; }); } })
             .catch(error => {
                 // error message in the popup
                 const errorPopupContent = '<b>Error:</b> Unable to fetch data';
@@ -105,11 +124,11 @@ document.getElementById('input').addEventListener('keydown', function (e) {
                 // removes the marker when the popup is closed
                 currentMarker.on('popupclose', function () {
                     map.removeLayer(currentMarker);
-                    currentMarker = null;
-                });
+                    currentMarker = null;});
                 
                 console.error('Error fetching data:', error);
             });
+            this.value = '';
         }
     }
 });
