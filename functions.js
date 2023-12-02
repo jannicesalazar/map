@@ -6,7 +6,7 @@ if (hasVisited) {
     Swal.fire({
         title: 'Welcome!',
         html: 'Hi, my name is Jannice and I made this website. You can look up any country or press anywhere to check out some data about that region.',
-        iconHtml: '<img src="sun.png" style="width: 50px; height: 50px;">',
+        iconHtml: '<img src="sun.png" style="width: 100%; height: 100%;">',
         confirmButtonText: 'Got it!'
     });
 
