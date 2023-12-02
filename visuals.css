@@ -6,10 +6,11 @@
     position: absolute;
     height: 30px ;
     width: 150px ; 
-    bottom: 20px; 
-    left: 20px;
+    top: 20px;
+    right: 20px ; 
     z-index: 1000;
-    border-radius: 20px; }
+    border-radius: 20px;
+     }
 
 .popup-container { text-align: center; }
 
