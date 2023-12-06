@@ -61,7 +61,7 @@ const marker = (latlng, popupContent) => {
         map.removeLayer(currentMarker);
         currentMarker = null; }); };
 
-// map clicks
+//map clicks
 const onMapClick = (e) => {
     weatherData(e.latlng.lat, e.latlng.lng)
         .then(data => {
@@ -81,14 +81,12 @@ document.getElementById('input').addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
         const searchTerm = this.value;
         if (searchTerm) {
-            
             //geocoding API for countries 
             const geocodeApiUrl = `https://nominatim.openstreetmap.org/search?country=${searchTerm}&format=json&limit=1`;
 
             fetch(geocodeApiUrl)
                 .then(response => response.json())
                 .then(data => {
-                    
                     //fits country to its coordinates when found 
                     if (data.length > 0) {
                         const countryCoords = [parseFloat(data[0].lat), parseFloat(data[0].lon)];
@@ -105,9 +103,8 @@ document.getElementById('input').addEventListener('keydown', function (e) {
                     //handles errors when getting data
                     const errorPopupContent = '<b>Error:</b> Unable to fetch data';
                     marker (map.getCenter(), errorPopupContent); });
-                //clear input value in input box 
-                this.value = ''; } 
-        } });
+                //clears input value in input box 
+                this.value = ''; } } });
 
 //show welcome popup for first time visitors 
 welcomePopup();
