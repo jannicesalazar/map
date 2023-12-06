@@ -69,7 +69,7 @@ const onMapClick = (e) => {
             const popupContent = dataPopup(data, e.latlng.lat, e.latlng.lng);
             marker (e.latlng, popupContent); })
         .catch(() => {
-            //display error if not able to get data 
+            //error if not able to get data 
             const errorPopupContent = '<b>Error:</b> Unable to fetch weather data';
             marker (e.latlng, errorPopupContent); }); };
 
