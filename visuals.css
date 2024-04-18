@@ -10,6 +10,8 @@
     right: 20px ; 
     z-index: 1000;
     border-radius: 20px;
+    padding: 15x;
+    text-indent: 10px;
     }
 
 .leaflet-popup-tip-container{display: none;}
